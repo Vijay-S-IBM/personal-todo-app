@@ -68,13 +68,18 @@ function GoogleSignInButton({ onLogin, toast, onWelcome, navigate }) {
       const id_token = credentialResponse.credential
       const res = await googleAuth(id_token)
       const { token, user } = res.data
-      onLogin(token, user)
 
-      // Show welcome loader, then navigate after a short delay
+      // Show welcome loader FIRST, then login + navigate after delay
+      // (calling onLogin immediately sets isAuthenticated=true which
+      //  triggers the useEffect redirect before the loader can render)
       const firstName = user.name?.split(' ')[0] || user.name
       onWelcome(firstName)
-      setTimeout(() => navigate('/dashboard', { replace: true }), 2000)
+      setTimeout(() => {
+        onLogin(token, user)
+        navigate('/dashboard', { replace: true })
+      }, 2000)
     } catch (err) {
+      onWelcome(null)
       const msg = err.response?.data?.detail || 'Authentication failed. Try again.'
       toast(msg, 'error')
     }

@@ -116,3 +116,75 @@
   .page { padding: 12px; }
   .cards { grid-template-columns: 1fr 1fr; }
 }
+
+/* ─── Stats loader ───────────────────────────────────────────────────────── */
+.statsLoader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+}
+
+.statsLoaderCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 40px 52px;
+  box-shadow: var(--shadow-md);
+  animation: slideUp 0.3s ease;
+}
+
+.statsLoaderIcon {
+  font-size: 42px;
+  line-height: 1;
+  animation: bounce 0.9s ease infinite;
+}
+
+.statsLoaderText {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  animation: fadeSwap 0.9s ease;
+  min-width: 200px;
+  text-align: center;
+}
+
+.statsLoaderDots {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.statsLoaderDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.statsLoaderDotActive {
+  background: var(--accent);
+  transform: scale(1.3);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes fadeSwap {
+  0%   { opacity: 0; transform: translateY(6px);  }
+  20%  { opacity: 1; transform: translateY(0);     }
+  80%  { opacity: 1; transform: translateY(0);     }
+  100% { opacity: 0; transform: translateY(-6px);  }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}

@@ -10,6 +10,44 @@ import Spinner from '../../components/Spinner'
 import styles from './StatisticsPage.module.css'
 import { getStatusColor } from '../../utils/statusColors'
 
+// ─── Friendly stats loader ────────────────────────────────────────────────
+const LOAD_STEPS = [
+  { icon: '🔍', text: 'Fetching your tasks…' },
+  { icon: '📊', text: 'Crunching the numbers…' },
+  { icon: '📈', text: 'Generating your charts…' },
+  { icon: '✨', text: 'Almost there…' },
+]
+
+function StatsLoader() {
+  const [step, setStep] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setStep((s) => (s + 1) % LOAD_STEPS.length)
+    }, 900)
+    return () => clearInterval(id)
+  }, [])
+
+  const current = LOAD_STEPS[step]
+
+  return (
+    <div className={styles.statsLoader}>
+      <div className={styles.statsLoaderCard}>
+        <div className={styles.statsLoaderIcon}>{current.icon}</div>
+        <p className={styles.statsLoaderText}>{current.text}</p>
+        <div className={styles.statsLoaderDots}>
+          {LOAD_STEPS.map((_, i) => (
+            <span
+              key={i}
+              className={`${styles.statsLoaderDot} ${i === step ? styles.statsLoaderDotActive : ''}`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const SUMMARY_CARDS = [
   { key: 'total_tasks',           label: 'Total Tasks',   color: 'var(--accent)'  },
   { key: 'completed_tasks',       label: 'Completed',     color: 'var(--green)'   },
@@ -115,7 +153,7 @@ export default function StatisticsPage() {
       </div>
 
       {loading ? (
-        <Spinner fullPage />
+        <StatsLoader />
       ) : stats ? (
         <>
           {/* Summary Cards */}
