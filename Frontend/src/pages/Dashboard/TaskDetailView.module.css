@@ -1,0 +1,41 @@
+.container { display: flex; flex-direction: column; gap: 18px; }
+
+.titleRow { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+
+.title { font-size: 18px; font-weight: 700; color: var(--text-primary); line-height: 1.4; }
+
+.editBtn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  background: var(--accent-light); color: var(--accent);
+  border-radius: var(--radius); font-size: 13px; font-weight: 600;
+  white-space: nowrap; flex-shrink: 0;
+  transition: background var(--transition);
+}
+.editBtn:hover { background: var(--row-hover); }
+
+.statusRow { display: flex; }
+
+.section {
+  display: flex; flex-direction: column; gap: 7px;
+  padding: 14px 16px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.sectionLabel {
+  font-size: 11.5px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--text-muted);
+}
+
+.sectionText { font-size: 14px; color: var(--text-primary); line-height: 1.6; white-space: pre-wrap; }
+
+.meta { display: flex; flex-direction: column; gap: 10px; padding-top: 4px; border-top: 1px solid var(--border); }
+
+.metaItem { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+.metaLabel { font-size: 12.5px; color: var(--text-secondary); font-weight: 500; }
+.metaValue { font-size: 13px; color: var(--text-primary); font-weight: 500; }
+
+.error { color: var(--red); font-size: 14px; padding: 16px 0; }

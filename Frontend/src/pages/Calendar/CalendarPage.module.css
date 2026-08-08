@@ -1,0 +1,106 @@
+.page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Header ──────────────────────────────── */
+.header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.navBtn {
+  width: 38px; height: 38px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text-secondary);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-sm);
+  transition: background var(--transition), color var(--transition);
+  flex-shrink: 0;
+}
+.navBtn:hover { background: var(--row-hover); color: var(--text-primary); }
+
+.monthTitle {
+  font-size: 20px; font-weight: 700; color: var(--text-primary);
+  min-width: 180px; text-align: center; letter-spacing: -0.3px;
+}
+
+.todayBtn {
+  padding: 7px 16px;
+  background: var(--accent-light); color: var(--accent);
+  border-radius: var(--radius); font-size: 13px; font-weight: 600;
+  transition: background var(--transition); white-space: nowrap;
+}
+.todayBtn:hover { background: var(--row-hover); }
+
+/* ── Legend ──────────────────────────────── */
+.legend { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.legendItem { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+.legendDot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Calendar grid ───────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.weekday {
+  text-align: center; font-size: 11.5px; font-weight: 600;
+  color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.06em; padding: 6px 2px 10px;
+}
+
+.cell {
+  min-height: 100px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg); padding: 8px;
+  display: flex; flex-direction: column; gap: 4px;
+  cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+  text-align: left; box-shadow: var(--shadow-sm);
+}
+.cell:hover { border-color: var(--accent); box-shadow: var(--shadow-md); background: var(--row-hover); }
+.cellOtherMonth { opacity: 0.3; }
+.cellToday { border-color: var(--accent) !important; background: var(--accent-light) !important; }
+.cellToday .dayNum { color: var(--accent); font-weight: 700; }
+.cellHasTasks { background: var(--surface-2); }
+
+.dayNum { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.totalCount { font-size: 11px; color: var(--text-secondary); font-weight: 500; }
+
+.statusBar { display: flex; height: 4px; border-radius: 2px; overflow: hidden; gap: 1px; }
+.statusSegment { border-radius: 2px; min-width: 3px; }
+
+.dotRow { display: flex; gap: 4px; flex-wrap: wrap; }
+.dotCount { font-size: 10.5px; font-weight: 700; }
+
+/* ── Responsive ──────────────────────────── */
+@media (max-width: 768px) {
+  .page { padding: 16px; gap: 14px; }
+
+  .monthTitle { font-size: 17px; min-width: 140px; }
+
+  .legend { gap: 10px; }
+  .legendItem { font-size: 11px; }
+
+  .grid { gap: 3px; }
+
+  .weekday { font-size: 10px; padding: 4px 1px 8px; letter-spacing: 0; }
+
+  .cell { min-height: 60px; padding: 5px; border-radius: var(--radius); gap: 3px; }
+
+  .dayNum { font-size: 12px; }
+  .totalCount { display: none; }   /* hide text count, keep bar */
+  .dotCount   { display: none; }   /* dots too small on mobile */
+}
+
+@media (max-width: 480px) {
+  .page { padding: 10px; }
+  .cell { min-height: 48px; padding: 4px; }
+  .weekday { font-size: 9px; }
+  .dayNum  { font-size: 11px; }
+  .statusBar { height: 3px; }
+}

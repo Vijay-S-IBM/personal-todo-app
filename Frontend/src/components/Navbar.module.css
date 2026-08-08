@@ -1,0 +1,264 @@
+.navbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 64px;
+  padding: 0 32px;
+}
+
+/* ── Brand ──────────────────────────────────── */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 24px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.brandIcon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  color: #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.4);
+  flex-shrink: 0;
+}
+
+.brandName {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+
+/* ── Desktop nav links ──────────────────────── */
+.links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px;
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background var(--transition), color var(--transition);
+  white-space: nowrap;
+}
+.link:hover { background: var(--row-hover); color: var(--text-primary); }
+.linkActive  { background: var(--accent-light) !important; color: var(--accent) !important; font-weight: 600; }
+
+/* ── Right cluster ──────────────────────────── */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.themeBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition), color var(--transition);
+  flex-shrink: 0;
+}
+.themeBtn:hover { background: var(--row-hover); color: var(--text-primary); }
+
+/* Hamburger — hidden on desktop */
+.hamburger {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+  flex-shrink: 0;
+}
+.hamburger:hover { background: var(--row-hover); color: var(--text-primary); }
+
+/* ── Profile ────────────────────────────────── */
+.profileArea { position: relative; }
+
+.avatarBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 5px 10px 5px 6px;
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  transition: background var(--transition);
+  cursor: pointer;
+}
+.avatarBtn:hover { background: var(--row-hover); }
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatarFallback {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.userName {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron     { color: var(--text-muted); transition: transform var(--transition); }
+.chevronOpen { color: var(--text-muted); transform: rotate(180deg); transition: transform var(--transition); }
+
+/* ── Profile dropdown ───────────────────────── */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 260px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 12px;
+  z-index: 200;
+  animation: fadeDown 0.15s ease;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dropdownHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 4px 10px;
+}
+
+.dropdownAvatar {
+  width: 44px; height: 44px;
+  border-radius: 50%; object-fit: cover; flex-shrink: 0;
+}
+
+.dropdownAvatarFallback {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 18px; flex-shrink: 0;
+}
+
+.dropdownName {
+  font-weight: 600; font-size: 14px; color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.dropdownEmail {
+  font-size: 12px; color: var(--text-secondary); margin-top: 2px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 4px 0 8px; }
+
+.logoutBtn {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; padding: 9px 10px;
+  background: none; color: var(--red);
+  font-size: 13.5px; font-weight: 500;
+  border-radius: var(--radius);
+  transition: background var(--transition);
+}
+.logoutBtn:hover { background: var(--red-light); }
+
+/* ── Mobile drawer ──────────────────────────── */
+.mobileMenu {
+  display: none;
+  flex-direction: column;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 12px 16px 16px;
+  gap: 4px;
+  animation: slideDown 0.18s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobileMenuOpen { display: flex; }
+
+.mobileLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 500;
+  transition: background var(--transition), color var(--transition);
+}
+.mobileLink:hover    { background: var(--row-hover); color: var(--text-primary); }
+.mobileLinkActive    { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+
+/* ── Breakpoints ────────────────────────────── */
+@media (max-width: 700px) {
+  .inner { padding: 0 16px; height: 56px; }
+  .links  { display: none; }
+  .hamburger { display: flex; }
+  .userName  { display: none; }
+  .brandName { font-size: 15px; }
+}
