@@ -1,43 +1,37 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useGoogleLogin } from '@react-oauth/google'
 import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../components/Toast'
 import { googleAuth } from '../../api/auth'
 import styles from './LoginPage.module.css'
 
+// ─── Welcome loader overlay ───────────────────────────────────────────────
+function WelcomeLoader({ name }) {
+  return (
+    <div className={styles.loaderOverlay}>
+      <div className={styles.loaderCard}>
+        <div className={styles.loaderIcon}>✓</div>
+        <h2 className={styles.loaderTitle}>Welcome back, {name}!</h2>
+        <p className={styles.loaderSub}>Getting your workspace ready…</p>
+        <div className={styles.loaderBar}>
+          <div className={styles.loaderBarFill} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function LoginPage() {
   const { login, isAuthenticated } = useAuth()
   const navigate = useNavigate()
   const toast = useToast()
+  const [welcomeUser, setWelcomeUser] = useState(null)
 
   useEffect(() => {
     if (isAuthenticated) navigate('/dashboard', { replace: true })
   }, [isAuthenticated, navigate])
 
-  const handleGoogleLogin = useGoogleLogin({
-    flow: 'auth-code',
-    onSuccess: async (codeResponse) => {
-      // @react-oauth/google with flow:'auth-code' returns a code.
-      // For id_token flow we need implicit flow instead.
-      // This will be handled via onSuccess with credential below.
-    },
-  })
-
-  // Use credential (id_token) flow
-  const handleCredentialLogin = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      try {
-        // tokenResponse.access_token — we need id_token
-        // The @react-oauth/google implicit flow gives access_token, not id_token.
-        // We use GoogleLogin component's onSuccess (credential) for id_token.
-        toast('Signing you in…', 'success')
-      } catch (err) {
-        toast('Sign-in failed. Please try again.', 'error')
-      }
-    },
-    onError: () => toast('Google sign-in was cancelled.', 'warning'),
-  })
+  if (welcomeUser) return <WelcomeLoader name={welcomeUser} />
 
   return (
     <div className={styles.page}>
@@ -50,7 +44,12 @@ export default function LoginPage() {
           Organise your day, track your tasks, and stay on top of everything.
         </p>
 
-        <GoogleSignInButton onLogin={login} toast={toast} />
+        <GoogleSignInButton
+          onLogin={login}
+          toast={toast}
+          onWelcome={setWelcomeUser}
+          navigate={navigate}
+        />
 
         <p className={styles.note}>
           Your data is private and tied to your Google account.
@@ -63,17 +62,18 @@ export default function LoginPage() {
 // Separate component using GoogleLogin for the credential (id_token) approach
 import { GoogleLogin } from '@react-oauth/google'
 
-function GoogleSignInButton({ onLogin, toast }) {
-  const navigate = useNavigate()
-
+function GoogleSignInButton({ onLogin, toast, onWelcome, navigate }) {
   const handleSuccess = async (credentialResponse) => {
     try {
       const id_token = credentialResponse.credential
       const res = await googleAuth(id_token)
       const { token, user } = res.data
       onLogin(token, user)
-      toast(`Welcome, ${user.name}!`, 'success')
-      navigate('/dashboard')
+
+      // Show welcome loader, then navigate after a short delay
+      const firstName = user.name?.split(' ')[0] || user.name
+      onWelcome(firstName)
+      setTimeout(() => navigate('/dashboard', { replace: true }), 2000)
     } catch (err) {
       const msg = err.response?.data?.detail || 'Authentication failed. Try again.'
       toast(msg, 'error')
